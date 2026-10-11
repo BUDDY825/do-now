@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#fff4f3">
+<meta name="description" content="A little birthday website celebrating 18 wonderful years.">
+<title>Happy 18th Birthday, My Sister!</title>
+<style>
+  /* ========= THEME: change these variables to customize the colors ========= */
+  :root {
+    --cream: #fff8f3; --pink: #f8dce4; --rose: #c85d7c;
+    --plum: #55364e; --lavender: #e8e1fa; --gold: #e9bd75;
+    --ink: #392b39; --muted: #756773; --paper: rgba(255,255,255,.78);
+    --shadow: 0 18px 55px rgba(91, 52, 77, .12);
+    --radius: 26px;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0; color: var(--ink); background:
+      radial-gradient(ellipse at 8% 8%, #ffe3e8 0, transparent 34rem),
+      radial-gradient(ellipse at 95% 35%, #eee8ff 0, transparent 30rem),
+      var(--cream);
+    font-family: ui-rounded, "Avenir Next", Avenir, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    line-height: 1.6;
+  }
+  a { color: inherit; }
+  button, input, textarea { font: inherit; }
+  button, a, input, textarea { -webkit-tap-highlight-color: transparent; }
+  :focus-visible { outline: 3px solid #8b4db0; outline-offset: 4px; }
+  .skip-link { position: absolute; left: 1rem; top: -5rem; z-index: 99; background: white; padding: .7rem 1rem; border-radius: 12px; }
+  .skip-link:focus { top: 1rem; }
+  .wrap { width: min(1100px, calc(100% - 2rem)); margin-inline: auto; }
+  .nav { display:flex; align-items:center; justify-content:space-between; gap:1rem; padding: 1rem 0; }
+  .brand { font-weight: 850; letter-spacing: -.04em; color: var(--plum); text-decoration:none; }
+  .nav-links { display:flex; gap: .8rem; flex-wrap:wrap; justify-content:flex-end; }
+  .nav-links a { font-size:.9rem; text-decoration:none; color:var(--muted); padding:.45rem .65rem; border-radius:999px; }
+  .nav-links a:hover { background:#fff; color:var(--plum); }
+  .hero { position:relative; overflow:hidden; padding: clamp(3.5rem, 9vw, 7rem) 0 5rem; text-align:center; }
+  .eyebrow { display:inline-flex; align-items:center; gap:.5rem; padding:.4rem .85rem; border:1px solid #e8c7d1; border-radius:999px; background:#fff9; color:var(--plum); font-size:.82rem; font-weight:750; letter-spacing:.08em; text-transform:uppercase; }
+  h1 { margin:1.2rem auto .8rem; max-width:850px; color:var(--plum); font-family: Georgia, "Times New Roman", serif; font-size:clamp(3.2rem, 11vw, 7.8rem); font-weight:500; letter-spacing:-.07em; line-height:.92; }
+  h1 em { color:var(--rose); font-weight:500; }
+  .hero-copy { max-width:580px; margin:1.2rem auto 1.8rem; color:var(--muted); font-size:clamp(1rem, 2.4vw, 1.18rem); }
+  .hero-actions { display:flex; justify-content:center; gap:.8rem; flex-wrap:wrap; }
+  .btn { display:inline-flex; justify-content:center; align-items:center; gap:.5rem; min-height:46px; border:0; border-radius:999px; padding:.8rem 1.2rem; cursor:pointer; text-decoration:none; font-weight:800; transition:transform .2s ease, box-shadow .2s ease, background .2s ease; }
+  .btn:hover { transform:translateY(-2px); box-shadow:0 8px 22px #6d3d5d20; }
+  .btn-primary { background:var(--plum); color:white; }
+  .btn-soft { background:white; color:var(--plum); border:1px solid #eadce7; }
+  .sparkle { position:absolute; pointer-events:none; color:var(--gold); font-size:clamp(1.3rem, 4vw, 2.7rem); animation:float 5s ease-in-out infinite; }
+  .s1 { top:18%; left:8%; } .s2 { top:25%; right:9%; animation-delay:-2s; } .s3 { bottom:15%; left:18%; animation-delay:-3s; }
+  .hero-orb { width:clamp(110px, 22vw, 205px); aspect-ratio:1; border-radius:50%; margin:2.2rem auto 0; display:grid; place-items:center; background:linear-gradient(145deg,#fff,#f8dce4 65%,#e8e1fa); box-shadow:inset 0 0 0 1px #fff, 0 20px 50px #ad6d8a20; }
+  .hero-orb span { font-family:Georgia,serif; font-size:clamp(3rem, 8vw, 5rem); color:var(--rose); line-height:1; }
+  section { padding: clamp(3.5rem, 8vw, 6rem) 0; }
+  .section-head { display:flex; align-items:end; justify-content:space-between; gap:1rem; margin-bottom:1.6rem; }
+  .kicker { margin:0 0 .4rem; color:var(--rose); text-transform:uppercase; letter-spacing:.15em; font-size:.75rem; font-weight:850; }
+  h2 { margin:0; color:var(--plum); font:500 clamp(2.2rem, 6vw, 4rem)/1 Georgia,serif; letter-spacing:-.045em; }
+  .section-note { max-width:330px; margin:0; color:var(--muted); font-size:.95rem; }
+  .gallery { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:.8rem; }
+  .photo { position:relative; display:block; width:100%; aspect-ratio: .92; overflow:hidden; border:0; padding:0; border-radius:20px; background:linear-gradient(145deg,#f5d7e2,#eee8ff); cursor:zoom-in; box-shadow:var(--shadow); }
+  .photo:nth-child(3n+1) { aspect-ratio:1.08; }
+  .photo img { width:100%; height:100%; display:block; object-fit:cover; transition:transform .45s ease, filter .45s ease; }
+  .photo:hover img { transform:scale(1.045); }
+  .photo img[src=""] { display:none; }
+  .photo .placeholder { position:absolute; inset:0; display:grid; place-content:center; text-align:center; padding:1rem; color:var(--plum); background:linear-gradient(135deg,#f6dce6,#f0eaff); }
+  .placeholder b { display:block; font:500 1.3rem Georgia,serif; }
+  .placeholder small { color:var(--muted); margin-top:.35rem; }
+  .photo .caption { position:absolute; inset:auto 0 0; padding:2.2rem 1rem .8rem; color:white; text-align:left; font-weight:800; background:linear-gradient(transparent,#281729b8); }
+  .letter-grid { display:grid; grid-template-columns:1fr; gap:1rem; }
+  .letter, .message-card, .memory, .playlist-card { border:1px solid #fff; background:var(--paper); box-shadow:var(--shadow); border-radius:var(--radius); }
+  .letter { padding:clamp(1.3rem,4vw,2.5rem); }
+  .letter .script { font:italic clamp(1.8rem,5vw,2.7rem) Georgia,serif; color:var(--rose); margin:.2rem 0 1rem; }
+  .letter p { color:#5d4d5b; }
+  .signoff { font:italic 1.3rem Georgia,serif; color:var(--plum); }
+  .message-card { padding:1.3rem; }
+  .message-card h3 { margin:.2rem 0 1rem; color:var(--plum); font:500 1.65rem Georgia,serif; }
+  label { display:block; font-size:.9rem; font-weight:800; margin:.8rem 0 .35rem; }
+  input, textarea { width:100%; border:1px solid #e5d6e2; border-radius:13px; background:#fff; padding:.8rem .9rem; color:var(--ink); }
+  textarea { min-height:110px; resize:vertical; }
+  .form-actions { display:flex; gap:.6rem; flex-wrap:wrap; margin-top:.9rem; }
+  .status { min-height:1.5em; color:var(--plum); font-size:.9rem; margin:.65rem 0 0; }
+  .posted-list { display:grid; gap:.7rem; margin-top:1rem; }
+  .posted { padding:.9rem 1rem; border-radius:16px; background:#fff; border:1px solid #f0e2eb; overflow-wrap:anywhere; }
+  .posted strong { color:var(--rose); display:block; }
+  .timeline { position:relative; display:grid; gap:1rem; }
+  .timeline::before { content:""; position:absolute; left:19px; top:18px; bottom:18px; width:2px; background:linear-gradient(var(--rose),#c7b6ee,var(--gold)); }
+  .memory { position:relative; padding:1.25rem 1.2rem 1.25rem 3.5rem; }
+  .memory::before { content:""; position:absolute; left:10px; top:1.5rem; width:18px; height:18px; border:4px solid var(--cream); border-radius:50%; background:var(--rose); box-shadow:0 0 0 1px #e6b8c9; }
+  .memory time { color:var(--rose); font-size:.78rem; font-weight:900; letter-spacing:.12em; text-transform:uppercase; }
+  .memory h3 { margin:.25rem 0 .35rem; color:var(--plum); font:500 1.55rem Georgia,serif; }
+  .memory p { margin:0; color:var(--muted); }
+  .playlist-card { padding:clamp(1.3rem,4vw,2.2rem); display:flex; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:wrap; }
+  .playlist-card p { margin:.4rem 0 0; color:var(--muted); }
+  .playlist-icon { flex:none; width:64px; height:64px; display:grid; place-items:center; border-radius:20px; background:var(--lavender); font-size:1.8rem; }
+  footer { padding:2rem 0 3rem; text-align:center; color:var(--muted); font-size:.9rem; }
+  .footer-heart { color:var(--rose); }
+  .lightbox { position:fixed; inset:0; z-index:100; display:none; place-items:center; padding:1rem; background:#211321ed; }
+  .lightbox.open { display:grid; animation:fadeIn .2s ease both; }
+  .lightbox figure { margin:0; width:min(900px,100%); max-height:90vh; display:grid; grid-template-rows:minmax(0,1fr) auto; gap:.65rem; }
+  .lightbox img { width:100%; max-height:78vh; object-fit:contain; border-radius:16px; background:#3b2b3b; }
+  .lightbox figcaption { color:white; text-align:center; }
+  .lightbox button { position:absolute; top:1rem; right:1rem; width:46px; height:46px; border:1px solid #ffffff55; border-radius:50%; background:#ffffff18; color:white; cursor:pointer; font-size:1.5rem; }
+  .reveal { opacity:0; transform:translateY(18px); transition:opacity .65s ease, transform .65s cubic-bezier(.2,.7,.2,1); }
+  .reveal.visible { opacity:1; transform:translateY(0); }
+  @keyframes float { 0%,100% { transform:translateY(0) rotate(0); } 50% { transform:translateY(-12px) rotate(8deg); } }
+  @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+  @media (min-width:700px) {
+    .gallery { grid-template-columns:repeat(3,minmax(0,1fr)); gap:1rem; }
+    .letter-grid { grid-template-columns:1.15fr .85fr; align-items:start; }
+    .timeline { grid-template-columns:repeat(2,minmax(0,1fr)); gap:1rem; }
+    .timeline::before { left:50%; top:0; bottom:0; }
+    .memory { padding-left:1.4rem; }
+    .memory::before { left:calc(50% - 9px); top:-9px; }
+    .memory:nth-child(odd) { margin-right:1.4rem; }
+    .memory:nth-child(even) { margin-left:1.4rem; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { scroll-behavior:auto !important; animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; }
+    .reveal { opacity:1; transform:none; }
+  }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="wrap">
+  <nav class="nav" aria-label="Main navigation">
+    <a class="brand" href="#top">♡ A little love note</a>
+    <div class="nav-links">
+      <a href="#photos">Photos</a><a href="#letter">Letter</a><a href="#memories">Memories</a>
+    </div>
+  </nav>
+</header>
+
+<main id="main">
+  <!-- ========= HERO: edit the name, age, and intro here ========= -->
+  <section class="hero" id="top" style="padding-top:2rem">
+    <span class="sparkle s1" aria-hidden="true">✦</span><span class="sparkle s2" aria-hidden="true">✧</span><span class="sparkle s3" aria-hidden="true">♡</span>
+    <div class="wrap">
+      <span class="eyebrow">✿ A very special day ✿</span>
+      <h1>Happy <em>18th</em><br>Birthday, <span id="sister-name-heading">Sister</span>!</h1>
+      <p class="hero-copy">Eighteen looks beautiful on you. Here’s to big dreams, little joys, and a whole new chapter full of magic.</p>
+      <div class="hero-actions"><a class="btn btn-primary" href="#letter">Read your letter <span aria-hidden="true">↗</span></a><a class="btn btn-soft" href="#photos">Open the memories ♡</a></div>
+      <div class="hero-orb" aria-label="Celebrating 18 years"><span>18<span style="font-size:.45em;vertical-align:top">♡</span></span></div>
+    </div>
+  </section>
+
+  <!-- ========= PHOTO GALLERY: replace placeholder src values with your photos ========= -->
+  <section id="photos">
+    <div class="wrap">
+      <div class="section-head reveal"><div><p class="kicker">The little things</p><h2>Our photo album</h2></div><p class="section-note">Tap any picture to see it bigger. Replace these dreamy placeholders with your favorite moments.</p></div>
+      <div class="gallery">
+        <button class="photo reveal" type="button" data-src="" data-alt="A favorite childhood memory with my sister" data-caption="Little beginnings">
+          <span class="placeholder"><b>♡ Little beginnings</b><small>Replace with childhood photo</small></span><span class="caption">Little beginnings</span>
+        </button>
+        <button class="photo reveal" type="button" data-src="" data-alt="A happy day spent laughing together" data-caption="Giggles & sunshine">
+          <span class="placeholder"><b>☀ Giggles & sunshine</b><small>Replace with a happy-day photo</small></span><span class="caption">Giggles & sunshine</span>
+        </button>
+        <button class="photo reveal" type="button" data-src="" data-alt="A celebration with family" data-caption="Family moments">
+          <span class="placeholder"><b>✿ Family moments</b><small>Replace with family photo</small></span><span class="caption">Family moments</span>
+        </button>
+        <button class="photo reveal" type="button" data-src="" data-alt="A fun adventure together" data-caption="Our adventures">
+          <span class="placeholder"><b>✧ Our adventures</b><small>Replace with travel or outing photo</small></span><span class="caption">Our adventures</span>
+        </button>
+        <button class="photo reveal" type="button" data-src="" data-alt="A candid photo of my sister smiling" data-caption="That smile">
+          <span class="placeholder"><b>♡ That smile</b><small>Replace with her favorite photo</small></span><span class="caption">That smile</span>
+        </button>
+        <button class="photo reveal" type="button" data-src="" data-alt="A recent memory celebrating this new chapter" data-caption="Chapter eighteen">
+          <span class="placeholder"><b>🎂 Chapter eighteen</b><small>Replace with a recent photo</small></span><span class="caption">Chapter eighteen</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========= LETTER + FAMILY/FRIEND MESSAGE FORM ========= -->
+  <section id="letter">
+    <div class="wrap">
+      <div class="section-head reveal"><div><p class="kicker">From my heart</p><h2>A letter for you</h2></div></div>
+      <div class="letter-grid">
+        <article class="letter reveal" id="birthday-letter">
+          <p class="script">To my beautiful sister,</p>
+          <p>Happy 18th birthday! It feels unreal that you’re stepping into this exciting new chapter. No matter how grown-up you become, you’ll always be the person who makes ordinary days brighter just by being you.</p>
+          <p>I hope you always remember how loved you are. May you have the courage to chase the dreams that scare you a little, the wisdom to choose what makes your heart peaceful, and the confidence to be completely yourself.</p>
+          <p>Thank you for all the laughs, the little moments, and the memories we’re still making. I’ll always be cheering for you — today, tomorrow, and every year after this one.</p>
+          <p class="signoff">All my love, always ♡<br><span id="sender-name">Your sibling</span></p>
+          <button class="btn btn-soft" id="copy-letter" type="button">Copy this letter</button>
+        </article>
+        <aside class="message-card reveal">
+          <h3>Add your birthday wish</h3>
+          <p style="color:var(--muted);margin-top:-.5rem">Write a little note, then copy it or share it with the family group.</p>
+          <form id="message-form">
+            <label for="message-name">Your name</label><input id="message-name" name="name" autocomplete="name" placeholder="e.g. Auntie Maya" required maxlength="60">
+            <label for="message-text">Your message</label><textarea id="message-text" name="message" placeholder="Wishing you a year full of joy..." required maxlength="600"></textarea>
+            <div class="form-actions"><button class="btn btn-primary" type="submit">Add wish ♡</button><button class="btn btn-soft" type="button" id="share-wish">Copy / share</button></div>
+            <p class="status" id="form-status" role="status" aria-live="polite"></p>
+          </form>
+          <div class="posted-list" id="posted-list" aria-live="polite"></div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========= TIMELINE: replace years and descriptions with real memories ========= -->
+  <section id="memories">
+    <div class="wrap">
+      <div class="section-head reveal"><div><p class="kicker">Then, now, always</p><h2>Our little timeline</h2></div><p class="section-note">A few chapters in your story — edit these to fit your own memories.</p></div>
+      <div class="timeline">
+        <article class="memory reveal"><time>Chapter 01 · The beginning</time><h3>Our first memories</h3><p>Little hands, big curiosity, and the start of a lifetime of stories together.</p></article>
+        <article class="memory reveal"><time>Chapter 02 · Growing up</time><h3>Our silly era</h3><p>Inside jokes, shared snacks, secret plans, and laughing until our cheeks hurt.</p></article>
+        <article class="memory reveal"><time>Chapter 03 · The adventures</time><h3>Making memories</h3><p>Every little outing and ordinary day became a memory I want to keep forever.</p></article>
+        <article class="memory reveal"><time>Chapter 04 · Right now</time><h3>Hello, eighteen!</h3><p>You’re growing into your own kind of wonderful. I can’t wait to see what you do next.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========= OPTIONAL MUSIC / VIDEO: replace the URL with your playlist ========= -->
+  <section id="playlist">
+    <div class="wrap">
+      <div class="playlist-card reveal">
+        <div class="playlist-icon" aria-hidden="true">♫</div>
+        <div style="flex:1;min-width:200px"><p class="kicker">Press play on the memories</p><h2 style="font-size:clamp(1.8rem,4vw,2.8rem)">Your birthday soundtrack</h2><p>Add a favorite Spotify playlist, YouTube song, or birthday video link.</p></div>
+        <a class="btn btn-primary" id="playlist-link" href="https://open.spotify.com/" target="_blank" rel="noopener noreferrer">Open playlist ↗</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer><div class="wrap">Made with <span class="footer-heart" aria-hidden="true">♥</span> for your eighteenth trip around the sun.</div></footer>
+
+<!-- Accessible lightbox. Escape closes it; arrow keys move between gallery items. -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer" aria-hidden="true">
+  <button type="button" id="close-lightbox" aria-label="Close photo viewer">×</button>
+  <figure><img id="lightbox-image" alt=""><figcaption id="lightbox-caption"></figcaption></figure>
+</div>
+
+<script>
+  /* ========= QUICK PERSONALIZATION: edit these values ========= */
+  const CONFIG = {
+    sisterName: "Sister",       // Replace with her name
+    senderName: "Your sibling", // Replace with your name
+    playlistUrl: "https://open.spotify.com/" // Replace with a playlist or video URL
+  };
+  document.title = `Happy 18th Birthday, ${CONFIG.sisterName}!`;
+  document.getElementById("sister-name-heading").textContent = CONFIG.sisterName;
+  document.getElementById("sender-name").textContent = CONFIG.senderName;
+  document.getElementById("playlist-link").href = CONFIG.playlistUrl;
+
+  // Reveal elements as they enter view; reduced-motion users see everything immediately.
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const revealItems = document.querySelectorAll(".reveal");
+  if ("IntersectionObserver" in window && !reduceMotion) {
+    const observer = new IntersectionObserver(entries => entries.forEach(entry => {
+      if (entry.isIntersecting) { entry.target.classList.add("visible"); observer.unobserve(entry.target); }
+    }), { threshold: 0.12 });
+    revealItems.forEach(item => observer.observe(item));
+  } else revealItems.forEach(item => item.classList.add("visible"));
+
+  // Gallery lightbox: keyboard, focus return, and image alt text included.
+  const photos = [...document.querySelectorAll(".photo")];
+  const lightbox = document.getElementById("lightbox");
+  const lightboxImage = document.getElementById("lightbox-image");
+  const lightboxCaption = document.getElementById("lightbox-caption");
+  const closeLightbox = document.getElementById("close-lightbox");
+  let activePhoto = 0, previousFocus = null;
+  function openPhoto(index) {
+    activePhoto = (index + photos.length) % photos.length;
+    const button = photos[activePhoto];
+    const img = button.querySelector("img");
+    const src = button.dataset.src || (img && img.src) || "";
+    lightboxImage.src = src;
+    lightboxImage.alt = button.dataset.alt || button.dataset.caption || "Birthday memory";
+    lightboxCaption.textContent = button.dataset.caption || "";
+    lightbox.classList.add("open");
+    lightbox.setAttribute("aria-hidden", "false");
+    previousFocus = button;
+    closeLightbox.focus();
+    document.body.style.overflow = "hidden";
+  }
+  function closePhoto() {
+    lightbox.classList.remove("open");
+    lightbox.setAttribute("aria-hidden", "true");
+    lightboxImage.removeAttribute("src");
+    document.body.style.overflow = "";
+    if (previousFocus) previousFocus.focus();
+  }
+  photos.forEach((button, i) => button.addEventListener("click", () => openPhoto(i)));
+  closeLightbox.addEventListener("click", closePhoto);
+  lightbox.addEventListener("click", e => { if (e.target === lightbox) closePhoto(); });
+  document.addEventListener("keydown", e => {
+    if (!lightbox.classList.contains("open")) return;
+    if (e.key === "Escape") closePhoto();
+    if (e.key === "ArrowRight") openPhoto(activePhoto + 1);
+    if (e.key === "ArrowLeft") openPhoto(activePhoto - 1);
+  });
+
+  // Copy helper with a fallback for older browsers / file:// use.
+  async function copyText(text) {
+    try {
+      if (navigator.clipboard && window.isSecureContext) await navigator.clipboard.writeText(text);
+      else {
+        const temp = document.createElement("textarea");
+        temp.value = text; temp.style.position = "fixed"; temp.style.opacity = "0";
+        document.body.appendChild(temp); temp.select();
+        const ok = document.execCommand("copy"); temp.remove();
+        if (!ok) throw new Error("Copy unavailable");
+      }
+      return true;
+    } catch (_) { return false; }
+  }
+  const letter = document.getElementById("birthday-letter");
+  document.getElementById("copy-letter").addEventListener("click", async () => {
+    const text = [...letter.querySelectorAll("p")].map(p => p.innerText).join("\n\n");
+    const ok = await copyText(text);
+    document.getElementById("copy-letter").textContent = ok ? "Letter copied ✓" : "Select and copy the letter";
+  });
+
+  // Wishes are kept in this page's current session only (no server/database).
+  const form = document.getElementById("message-form");
+  const nameInput = document.getElementById("message-name");
+  const messageInput = document.getElementById("message-text");
+  const postedList = document.getElementById("posted-list");
+  const status = document.getElementById("form-status");
+  let latestWish = "";
+  form.addEventListener("submit", e => {
+    e.preventDefault();
+    const name = nameInput.value.trim(), message = messageInput.value.trim();
+    if (!name || !message) { status.textContent = "Please add your name and a message."; return; }
+    latestWish = `${name} wishes ${CONFIG.sisterName} a happy 18th birthday:\n${message}`;
+    const card = document.createElement("div"); card.className = "posted";
+    const strong = document.createElement("strong"); strong.textContent = name;
+    const body = document.createElement("div"); body.textContent = message;
+    card.append(strong, body); postedList.prepend(card);
+    status.textContent = "Wish added below. It will disappear when this page is refreshed.";
+    messageInput.value = "";
+  });
+  document.getElementById("share-wish").addEventListener("click", async () => {
+    const name = nameInput.value.trim(), message = messageInput.value.trim();
+    const text = (name && message) ? `${name} wishes ${CONFIG.sisterName} a happy 18th birthday:\n${message}` : latestWish;
+    if (!text) { status.textContent = "Write a wish first, or add one and then copy/share it."; return; }
+    if (navigator.share) {
+      try { await navigator.share({ title: `Birthday wish for ${CONFIG.sisterName}`, text }); status.textContent = "Share sheet opened."; return; }
+      catch (err) { if (err.name === "AbortError") return; }
+    }
+    const ok = await copyText(text);
+    status.textContent = ok ? "Wish copied — paste it into your chat!" : "Copy isn’t available here; please select the text and copy it.";
+  });
+</script>
+</body>
+</html>
